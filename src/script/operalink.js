@@ -78,7 +78,6 @@ if (!opera)
 	 */
 	opera = new function Opera() {};
 
-
 /**
  * @namespace Handles communication and authentication with the Opera Link server.
  * @requires Add access to https://auth.opera.com and https://link.api.opera.com 
