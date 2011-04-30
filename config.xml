@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" version="1 alpha">
+	<name>Opera Link Test</name>
+	<description>Testing Opera Link</description>
+	<author href="http://chaosinacan.com/">Joel Spadin</author>
+	<!-- need this to connect to opera link -->
+	<access origin="https://auth.opera.com" />
+	<access origin="https://link.api.opera.com" />
+	<!-- need this to get favicons from any site -->
+	<access origin="*" />
+</widget>
