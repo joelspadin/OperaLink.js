@@ -76,13 +76,13 @@ if (!opera)
 	/**
 	 * @namespace Opera
 	 */
-	opera = {};
+	opera = new function Opera() {};
 
 
 /**
  * @namespace Handles communication and authentication with the Opera Link server.
  * @requires Add access to https://auth.opera.com and https://link.api.opera.com 
- * in your extension's config.xml.
+ * in your extension's config.xml. Requires oauth.js and sha.js.
  */
 opera.link = new function OperaLink() {
 	
