@@ -1,3 +1,6 @@
+// I found this somewhere on the Internet and modified it a bit to fit my needs.
+// I don't remember where it is from now, but I'm guessing StackOverflow.
+
 var debug;
 
 if (false)

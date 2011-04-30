@@ -1,0 +1,57 @@
+OperaLink.js 0.9 alpha
+
+Copyright 2011 Joel Spadin
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+
+
+This is a JavaScript library for interacting with Opera Link. See operalink.js
+for usage details.
+
+While designed for use with Opera Extensions, this library should be usable in 
+any context where cross-domain XML HTTP requests are allowed. You will need to
+do a couple extra things to make it work in other contexts:
+
+1. set opera.link.authorizeFunction. This callback is called when the user 
+   should be redirected to a web page so they can authorize your application to
+   connect to Opera Link. It is passed a URL and simply needs to open it.
+   
+2. set opera.link.storage. This sets the storage object used when saving/loading
+   OAuth information. It defaults to widget.preferences if it is available, and 
+   localStorage if it is not. If you do not use opera.link.saveToken or
+   opera.link.loadToken, you can ignore this setting.
+
+   
+The build and makedoc scripts in the root directory work with my own Cygwin
+setup. They may require some modification to work in a normal Linux environment.
+makedoc also requires JSDoc ( http://code.google.com/p/jsdoc-toolkit/ )
+
+
+TODO:
+- Finish testing things
+- Write import functions
+
+TESTED:
+- Getting bookmarks/folders
+- Creating bookmarks/folders
+- Trashing bookmarks
+
+
+For more information:
+https://github.com/ChaosinaCan/OperaLink.js
+http://my.opera.com/spadija/
+
+
+
