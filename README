@@ -3,6 +3,10 @@ OperaLink.js 0.9 alpha
 This is a JavaScript library for interacting with Opera Link. See operalink.js
 for usage details.
 
+The only files you need to add to your project are the three script files in the
+build directory: operalink.js, oauth.js, and sha1.js. Everything else in the src
+directory is an example extension used to test that the library actually works.
+
 While designed for use with Opera Extensions, this library should be usable in 
 any context where cross-domain XML HTTP requests are allowed. You will need to
 do a couple extra things to make it work in other contexts:
@@ -26,7 +30,7 @@ TODO:
 - Finish testing things
 - Write import functions
 
-TESTED:
+Things Tested So Far:
 - Getting bookmarks/folders
 - Creating bookmarks/folders
 - Trashing bookmarks
@@ -36,5 +40,5 @@ For more information:
 https://github.com/ChaosinaCan/OperaLink.js
 http://my.opera.com/spadija/
 
-
+The OAuth library used is from http://oauth.googlecode.com/svn/code/javascript/
 
