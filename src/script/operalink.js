@@ -71,12 +71,33 @@
  */
 
 
-
-if (!opera)
+try {
+	opera;
+} catch (error) {
 	/**
 	 * @namespace Opera
 	 */
-	opera = new function Opera() {};
+	opera = new function Opera() {
+
+		/*// compatibility with Google Chrome
+		if (chrome) {
+			this.extension = new function () {
+				this.tabs = new function () {
+					this.create = function (options) {
+						chrome.tabs.create({url: options.url, selected: options.focused == undefined ? true : options.focused});
+					};
+				};
+			};
+		}*/
+	};
+}
+
+try {
+	widget;
+} catch (error) {
+	var widget = undefined;
+}
+
 
 /**
  * @namespace Handles communication and authentication with the Opera Link server.
