@@ -1,0 +1,18 @@
+
+body > section {
+	display: none;
+}
+
+body > section:target{
+	display: block;
+}
+
+body.checking section,
+body.authenticate section {
+	display: none;
+}
+
+body.checking #checking,
+body.authenticate #authenticate {
+	display: block !important;
+}

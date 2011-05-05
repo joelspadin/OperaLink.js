@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style/options.css">
+	<script src="script/debug.js"></script>
+	<script src="script/sha1.js"></script>
+	<script src="script/oauth.js"></script>
+	<script src="script/operalink.js"></script>
+	<script src="script/options.js"></script>
+	<title>Opera Link Test</title>
+</head>
+<body>
+	<header>
+		<h1>Opera Link Test</h1>
+		<h2>By Joel Spadin</h2>
+	</header>
+	
+	<nav>
+		<ul>
+			<li><a href="#bookmarks">Bookmarks</a></li>
+			<li><a href="#notes">Notes</a></li>
+			<li><a href="#search">Search Engines</a></li>
+			<li><a href="#speeddial">Speed Dial</a></li>
+			<li><a href="#urlfilter">URL Filter</a></li>
+		</ul>
+	</nav>
+	
+	<section id="checking">
+		<p>Contacting the Opera Link server...</p>
+	</section>
+	
+	<section id="authenticate">
+		<p>Your Opera Link authorization is missing, invalid, or expired.</p>
+		<button id="authorize">Authorize</button>
+	</section>
+	
+	<section id="bookmarks">
+		<h1>Bookmarks</h1>
+		<ul id="bookmarks_list"></ul>
+	</section>
+	
+	<section id="notes">
+		<h1>Notes</h1>
+		<ul id="notes_list"></ul>
+	</section>
+	
+	<section id="search">
+		<h1>Search Engines</h1>
+		<ul id="search_list"></ul>
+	</section>
+	
+	<section id="speeddial">
+		<h1>Speed Dial</h1>
+		<ul id="speeddial_list"></ul>
+	</section>
+	
+	<section id="urlfilter">
+		<h1>URL Filter</h1>
+		<ul id="urlfilter_list"></ul>
+	</section>
+	
+	<footer>
+		
+	</footer>
+	
+<script>
+	opera.link.consumer(
+		'0DJPd7HUoAH3OIKXxe9bxPL4iaWqL9Qi',
+		'8t3nmu7br8uWHIcrKFPZfdPuwycoU1dI');
+	
+	var authorized = false;
+	var tempToken = null;
+	
+	
+	if (opera.link.loadToken()) {
+		document.body.addClass('checking');
+		opera.link.testAuthorization(function(result) {
+			authorized = result;
+			document.body.removeClass('checking');
+			if (!authorized)
+				document.body.addClass('authenticate');
+			
+			if (window.location.hash == '') {
+				window.location.assign(window.location.href + '#bookmarks');
+			}
+			else
+				loadData();
+		});
+	}
+	else
+		document.body.addClass('authenticate');
+	
+	
+	opera.extension.onmessage = function(e) {
+		switch(e.data.action) {
+			case 'authorized':
+				authorized = true;
+				document.body.removeClass('authenticate');
+				break;
+		}
+	}
+	
+	
+	addEventListener('hashchange', function() {
+		if (authorized)
+			loadData();
+	}, false);
+	
+	
+	addEventListener('load', function() {
+		
+		$('#authorize').addEventListener('click', function(e) {
+			opera.extension.postMessage({
+				action: 'request_token'
+			});
+		}, false);	
+		
+	}, false);
+	
+</script>
+	
+</body>
+</html>
