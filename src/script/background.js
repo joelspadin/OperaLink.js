@@ -8,12 +8,14 @@ window.addEventListener('load', function() {
 	// true if we are authorized to use Opera Link, false if we still need to authenticate
 	var authorized = false;
 
+	var tokenRequester = null;
+
 	// Consumer key and secret for the test application
 	opera.link.consumer(
 		'0DJPd7HUoAH3OIKXxe9bxPL4iaWqL9Qi',
 		'8t3nmu7br8uWHIcrKFPZfdPuwycoU1dI');
 
-
+	/*
 	var UIItemProperties = {
 		title: 'Opera Link Test',
 		onclick: buttonClicked,
@@ -21,7 +23,7 @@ window.addEventListener('load', function() {
 
 	var button = opera.contexts.toolbar.createItem(UIItemProperties);
 	opera.contexts.toolbar.addItem(button);
-
+	*/
 
 	// If we have a saved access token, check that it is valid
 	if (opera.link.loadToken()) {
@@ -59,6 +61,17 @@ window.addEventListener('load', function() {
 	
 	opera.extension.onmessage = function(e) {
 		switch(e.data.action) {
+			case 'request_token':
+				if (authorized)
+					break;
+				
+				if (tempToken)
+					tempToken = null;
+				
+				getRequestToken();
+				tokenRequester = e.source;
+				break;
+				
 			case 'verifier':
 				// If we get a verifier code and we're waiting for one, finish authentication
 				if (tempToken) {
@@ -93,6 +106,13 @@ window.addEventListener('load', function() {
 		opera.link.saveToken();
 		tempToken = null;
 		authorized = true;
+		
+		if (tokenRequester) {
+			tokenRequester.postMessage({
+				action: 'authorized'
+			});
+			tokenRequester = null;
+		}
 	}
 	
 	
