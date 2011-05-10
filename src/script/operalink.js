@@ -71,12 +71,21 @@
  */
 
 
-
-if (!opera)
+try {
+	opera;
+} catch (error) {
 	/**
 	 * @namespace Opera
 	 */
 	opera = new function Opera() {};
+}
+
+try {
+	widget;
+} catch (error) {
+	var widget = undefined;
+}
+
 
 /**
  * @namespace Handles communication and authentication with the Opera Link server.
@@ -325,7 +334,8 @@ opera.link = new function OperaLink() {
 	 */
 	this.testAuthorization = function(callback) {
 		this.get(this.apiurl + 'bookmark', null, function(xhr) {
-			callback(xhr.status != opera.link.response.Unauthorized);
+			callback(xhr.status != opera.link.response.Unauthorized
+			      && xhr.status < 500); // 50x error is a server error.
 		});
 	}
 	
