@@ -18,6 +18,7 @@
 	
 	<nav>
 		<ul>
+			<li><a href="test/SpecRunner.html">Test Suite</a></li>
 			<li><a href="#bookmarks">Bookmarks</a></li>
 			<li><a href="#notes">Notes</a></li>
 			<li><a href="#search">Search Engines</a></li>
@@ -61,13 +62,22 @@
 	</section>
 	
 	<footer>
-		
+		<p>
+			<label for="console">Console</label>
+			<input type="text" id="console" name="console" style="width:400px">
+			<button id="runcmd">Run</button>
+		</p>
+		<p>
+			<output id="status"></output>
+			<output id="response"></output>
+		</p>
 	</footer>
 	
 <script>
+
 	opera.link.consumer(
-		'0DJPd7HUoAH3OIKXxe9bxPL4iaWqL9Qi',
-		'8t3nmu7br8uWHIcrKFPZfdPuwycoU1dI');
+		'nqcGiIYdmDCLNqoiHr6tlUEaPgYwtYA4',
+		'CgIxItz8YxkO6tB2uHUl6MuTxIK8Vcza');
 	
 	var authorized = false;
 	var tempToken = null;
@@ -117,6 +127,25 @@
 		}, false);	
 		
 	}, false);
+	
+	
+	
+	$('#runcmd').addEventListener('click', function() {
+		consoleCallback({ status: -1, response: '...' });
+		eval($('#console').value);
+	}, false);
+	
+	function consoleCallback(e) {
+		$('#status').value = e.status;
+		$('#response').value = formatJSON(JSON.stringify(e.response));
+	}
+	
+	function formatJSON(data) {
+		return data;
+	}
+	
+	window.link = opera.link;
+	window.cb = consoleCallback;
 	
 </script>
 	

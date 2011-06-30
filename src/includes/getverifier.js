@@ -10,7 +10,7 @@
 window.addEventListener('DOMContentLoaded', function(e) {
 	
 	var extensionCheck = true;
-	var extensionName = 'Tab Vault';
+	var extensionName = 'OperaLink.js Test';
 	
 	var verifier = document.getElementById('verifier');
 	if (!verifier)

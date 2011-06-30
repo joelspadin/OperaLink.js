@@ -143,7 +143,7 @@ var Bookmarks = new function() {
 		
 		var el = dom.make('li', '.bookmark');
 		var title = dom.make('span');
-		title.textContent = item.properties.title;
+		title.textContent = item.properties.title + ' ' + item.id;
 		
 		var list = dom.make('ul', '.children');
 		

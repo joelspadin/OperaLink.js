@@ -71,12 +71,21 @@
  */
 
 
-
-if (!opera)
+try {
+	opera;
+} catch (error) {
 	/**
 	 * @namespace Opera
 	 */
 	opera = new function Opera() {};
+}
+
+try {
+	widget;
+} catch (error) {
+	var widget = undefined;
+}
+
 
 /**
  * @namespace Handles communication and authentication with the Opera Link server.
@@ -270,6 +279,15 @@ opera.link = new function OperaLink() {
 	}
 	
 	/**
+	 * Unsets the OAuth access token and token secret. To clear tokens saved to
+	 * storage, use clearSavedToken() instead.
+	 */
+	this.deauthorize = function() {
+		accessor.token = null;
+		accessor.tokenSecret = null;
+	}
+	
+	/**
 	 * Requests a new request token. This will open a new tab where the user can
 	 * grant access to your application. The resulting request token, token secret,
 	 * and 6-digit verifier must be used with opera.link.getAccessToken to get a
@@ -325,7 +343,8 @@ opera.link = new function OperaLink() {
 	 */
 	this.testAuthorization = function(callback) {
 		this.get(this.apiurl + 'bookmark', null, function(xhr) {
-			callback(xhr.status != opera.link.response.Unauthorized);
+			callback(xhr.status != opera.link.response.Unauthorized
+			      && xhr.status < 500); // 50x error is a server error.
 		});
 	}
 	

@@ -12,8 +12,8 @@ window.addEventListener('load', function() {
 
 	// Consumer key and secret for the test application
 	opera.link.consumer(
-		'0DJPd7HUoAH3OIKXxe9bxPL4iaWqL9Qi',
-		'8t3nmu7br8uWHIcrKFPZfdPuwycoU1dI');
+		'nqcGiIYdmDCLNqoiHr6tlUEaPgYwtYA4',
+		'CgIxItz8YxkO6tB2uHUl6MuTxIK8Vcza');
 
 	/*
 	var UIItemProperties = {
@@ -44,7 +44,7 @@ window.addEventListener('load', function() {
 			//tests.bookmarks.getOperaMini();
 			//tests.bookmarks.create();
 			//tests.bookmarks.createFolder();
-			tests.bookmarks.trash();
+			//tests.bookmarks.trash();
 		}
 		else {
 			if (tempToken) {
@@ -62,8 +62,10 @@ window.addEventListener('load', function() {
 	opera.extension.onmessage = function(e) {
 		switch(e.data.action) {
 			case 'request_token':
-				if (authorized)
+				if (authorized) {
+					console.log('already authorized');
 					break;
+				}
 				
 				if (tempToken)
 					tempToken = null;
