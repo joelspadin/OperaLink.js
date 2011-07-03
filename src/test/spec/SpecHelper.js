@@ -11,6 +11,17 @@ function authorize() {
 	opera.link.loadToken();
 }
 
+function fakeGetRequest(props) {
+    spyOn(opera.link, 'get').andCallFake(function(u, p, cb) {
+        var responseObject = {'status': opera.link.response.Ok,
+                              'responseText': ''};
+        for (var i in props) {
+            responseObject[i] = props[i];
+        }
+        cb(responseObject);
+    });
+}
+
 beforeEach(function() {
 	this.addMatchers({
 		toBeOfType: function(type) {
