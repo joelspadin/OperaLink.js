@@ -24,6 +24,9 @@ describe("Bookmarks", function() {
 	}
 	
 	it('should be able to get all bookmarks', function() {
+                fakeGetRequest({'responseText': '[{"id": 1}, {"id": 2}]',
+                                'expectedUrl': olink.apiurl +
+                                                   'bookmark/descendtants/'});
 		bookmarks.getAll(callback);
 		
 		waitsFor(function() { return complete; }, 'request never completed', timeout);
@@ -37,6 +40,7 @@ describe("Bookmarks", function() {
 			allBookmarks = response.response;
 		});
 
+            expect(olink.get).toHaveBeenCalled();
 	});
 	
 	it('should be able to create a bookmark', function() {
