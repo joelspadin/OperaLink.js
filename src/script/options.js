@@ -142,12 +142,18 @@ var Bookmarks = new function() {
 		debug(item);
 		
 		var el = dom.make('li', '.bookmark');
-		var title = dom.make('span');
-		title.textContent = item.properties.title + ' ' + item.id;
+		var title = dom.make('a');
+		title.textContent = item.properties.title;
+		title.href = item.properties.uri;
+		
+		var id = dom.make('span');
+		id.textContent = item.id;
 		
 		var list = dom.make('ul', '.children');
 		
 		el.appendChild(title);
+		el.appendChild(document.createTextNode(' '));
+		el.appendChild(id);
 		el.appendChild(list);
 		
 		parent.appendChild(el);
@@ -265,11 +271,16 @@ var SpeedDial = new function() {
 		debug(item);
 		
 		var el = dom.make('li', '.speeddial');
-		var title = dom.make('span');
+		var title = dom.make('a');
 		title.textContent = item.properties.title;
+		title.href = item.properties.uri;
 		
+		var pos = dom.make('span');
+		pos.textContent = item.properties.position;
 		
-		el.appendChild(title);	
+		el.appendChild(pos);
+		el.appendChild(document.createTextNode(' '));
+		el.appendChild(title);
 		parent.appendChild(el);
 	}
 	
@@ -299,11 +310,15 @@ var UrlFilter = new function() {
 		debug(item);
 		
 		var el = dom.make('li', '.urlfilter');
-		var title = dom.make('span');
-		title.textContent = item.properties.content;
+		var url = dom.make('span', '.title');
+		url.textContent = item.properties.content;
 		
+		var type = dom.make('span', '.type');
+		type.textContent = item.properties.type;
 		
-		el.appendChild(title);	
+		el.appendChild(type);
+		el.appendChild(document.createTextNode(' '));
+		el.appendChild(url);
 		parent.appendChild(el);
 	}
 	

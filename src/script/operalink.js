@@ -155,7 +155,8 @@ opera.link = new function OperaLink() {
 	this.apiurl = 'https://link.api.opera.com/rest/';
 	
 	/**
-	 * If true, the library will print information about requests using console.log
+	 * If true, the library will print information about requests using console.log.
+	 * Defaults to false.
 	 * @type Boolean
 	 */
 	this.debug = false;
@@ -594,15 +595,39 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 		util.get(type, item, null, callback);
 	}
 	
+	
 	/**
 	 * Gets an array of all bookmarks inside a folder
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>getAll</b>(callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>getAll</b>(parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
-	 * @param {null|String} [parent] The id of the parent folder or null to use the root
 	 */
-	this.getAll = function(callback, parent) {
+	this.getAll = function(callback) {
+		var parent = null;
+		if (typeof callback == 'string') {
+			parent = arguments[0];
+			callback = arguments[1];
+		}
+		
 		var item = parent ? parent + '/descendants' : 'descendants';
 		item = item.replace('//', '/');
 		util.get(type, item, null, callback);
@@ -741,13 +766,36 @@ opera.link.notes = new function OperaLinkNotes() {
 	
 	/**
 	 * Gets an array of all notes inside a folder
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>getAll</b>(callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>getAll</b>(parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
-	 *	@param {null|String} [parent] The id of the parent folder or null to use the root
 	 */
-	this.getAll = function(callback, parent) {
+	this.getAll = function(callback) {
+		var parent = null;
+		if (typeof callback == 'string') {
+			parent = arguments[0];
+			callback = arguments[1];
+		}
+		
 		var item = parent ? parent + '/descendants' : 'descendants';
 		item = item.replace('//', '/');
 		util.get(type, item, null, callback);

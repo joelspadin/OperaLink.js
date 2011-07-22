@@ -50,7 +50,7 @@ describe("Bookmarks", function() {
 	
 	it("should be able to get a bookmark folder's children by its ID", function() {
 		var callback = sinon.spy();
-		bookmarks.getAll(callback, '4E1601F6F30511DB9CA51FD19A7AAECA');
+		bookmarks.getAll('4E1601F6F30511DB9CA51FD19A7AAECA', callback);
 		server.respond();
 		
 		expect(callback).toHaveBeenCalledWith({

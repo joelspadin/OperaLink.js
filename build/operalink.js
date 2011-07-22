@@ -71,12 +71,20 @@
  */
 
 
-
-if (!opera)
+try {
+	opera;
+} catch (error) {
 	/**
 	 * @namespace Opera
 	 */
 	opera = new function Opera() {};
+}
+
+try {
+	widget;
+} catch (error) {
+	var widget = undefined;
+}
 
 
 /**
@@ -138,12 +146,20 @@ opera.link = new function OperaLink() {
 		 */
 		NotImplemented: 501
 	}
+
 	
 	/**
 	 * The location of the Opera Link REST API
 	 * @type String
 	 */
 	this.apiurl = 'https://link.api.opera.com/rest/';
+	
+	/**
+	 * If true, the library will print information about requests using console.log.
+	 * Defaults to false.
+	 * @type Boolean
+	 */
+	this.debug = false;
 	
 	/**
 	 * If true, the results of actions that only return one object will be 
@@ -217,6 +233,9 @@ opera.link = new function OperaLink() {
 	
 		xhr.open(message.method, url, true);
 		xhr.send(null);
+		
+		if (this.debug)
+			console.log(url);
 	}
 	
 	/**
@@ -247,6 +266,9 @@ opera.link = new function OperaLink() {
 		xhr.setRequestHeader('Authorization', authorizationHeader);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(requestBody);
+		
+		if (this.debug)
+			console.log(url);
 	}
 	
 	/**
@@ -268,6 +290,15 @@ opera.link = new function OperaLink() {
 	this.authorize = function(token, secret) {
 		accessor.token = token;
 		accessor.tokenSecret = secret;
+	}
+	
+	/**
+	 * Unsets the OAuth access token and token secret. To clear tokens saved to
+	 * storage, use clearSavedToken() instead.
+	 */
+	this.deauthorize = function() {
+		accessor.token = null;
+		accessor.tokenSecret = null;
 	}
 	
 	/**
@@ -326,7 +357,8 @@ opera.link = new function OperaLink() {
 	 */
 	this.testAuthorization = function(callback) {
 		this.get(this.apiurl + 'bookmark', null, function(xhr) {
-			callback(xhr.status != opera.link.response.Unauthorized);
+			callback(xhr.status != opera.link.response.Unauthorized
+			      && xhr.status < 500); // 50x error is a server error.
 		});
 	}
 	
@@ -563,15 +595,39 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 		util.get(type, item, null, callback);
 	}
 	
+	
 	/**
 	 * Gets an array of all bookmarks inside a folder
-	 * @param {null|String} parent The id of the parent folder or null to use the root
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>getAll</b>(callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>getAll</b>(parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.getAll = function(parent, callback) {
+	this.getAll = function(callback) {
+		var parent = null;
+		if (typeof callback == 'string') {
+			parent = arguments[0];
+			callback = arguments[1];
+		}
+		
 		var item = parent ? parent + '/descendants' : 'descendants';
 		item = item.replace('//', '/');
 		util.get(type, item, null, callback);
@@ -710,13 +766,36 @@ opera.link.notes = new function OperaLinkNotes() {
 	
 	/**
 	 * Gets an array of all notes inside a folder
-	 * @param {null|String} parent The id of the parent folder or null to use the root
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>getAll</b>(callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>getAll</b>(parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.getAll = function(parent, callback) {
+	this.getAll = function(callback) {
+		var parent = null;
+		if (typeof callback == 'string') {
+			parent = arguments[0];
+			callback = arguments[1];
+		}
+		
 		var item = parent ? parent + '/descendants' : 'descendants';
 		item = item.replace('//', '/');
 		util.get(type, item, null, callback);

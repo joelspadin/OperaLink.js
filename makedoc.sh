@@ -6,10 +6,13 @@ operalink="$wdir/build/operalink.js"
 
 rm -rf ./jsdoc
 
+
 echo "$operalink"
 #If you want to use this script, change this to the location of JSDoc
 pushd /c/Users/spadija/Programs/Programming/JSDoc
 cp "$operalink" .
+
+rm -rf ./out
 
 java -jar jsrun.jar app/run.js -a -t=templates/jsdoc operalink.js
 rm operalink.js
