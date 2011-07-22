@@ -2,9 +2,7 @@ describe("OperaLink.js Environment", function() {
 	
 	var olink = opera.link;
 	authorize();
-	
-	
-	
+
 	
 	describe("Storage", function() {
 	
@@ -18,7 +16,7 @@ describe("OperaLink.js Environment", function() {
 		});
 	});
 	
-	describe("Authorization", function() {
+	xdescribe("Authorization", function() {
 	
 		it('should have a valid OAuth token', function() {
 			var complete = false;

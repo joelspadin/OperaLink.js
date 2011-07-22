@@ -146,12 +146,19 @@ opera.link = new function OperaLink() {
 		 */
 		NotImplemented: 501
 	}
+
 	
 	/**
 	 * The location of the Opera Link REST API
 	 * @type String
 	 */
 	this.apiurl = 'https://link.api.opera.com/rest/';
+	
+	/**
+	 * If true, the library will print information about requests using console.log
+	 * @type Boolean
+	 */
+	this.debug = false;
 	
 	/**
 	 * If true, the results of actions that only return one object will be 
@@ -225,6 +232,9 @@ opera.link = new function OperaLink() {
 	
 		xhr.open(message.method, url, true);
 		xhr.send(null);
+		
+		if (this.debug)
+			console.log(url);
 	}
 	
 	/**
@@ -255,6 +265,9 @@ opera.link = new function OperaLink() {
 		xhr.setRequestHeader('Authorization', authorizationHeader);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(requestBody);
+		
+		if (this.debug)
+			console.log(url);
 	}
 	
 	/**
