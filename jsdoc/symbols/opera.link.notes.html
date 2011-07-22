@@ -277,7 +277,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">opera.link.notes.<b><a href="../symbols/opera.link.notes.html#.create">create</a></b>(params, parent, callback)
+								<div class="fixedFont">opera.link.notes.<b><a href="../symbols/opera.link.notes.html#.create">create</a></b>()
 								</div>
 								<div class="description">Creates a new note</div>
 							</td>
@@ -286,7 +286,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">opera.link.notes.<b><a href="../symbols/opera.link.notes.html#.createFolder">createFolder</a></b>(params, parent, callback)
+								<div class="fixedFont">opera.link.notes.<b><a href="../symbols/opera.link.notes.html#.createFolder">createFolder</a></b>()
 								</div>
 								<div class="description">Creates a new note folder</div>
 							</td>
@@ -295,9 +295,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">opera.link.notes.<b><a href="../symbols/opera.link.notes.html#.createSeparator">createSeparator</a></b>(parent, callback)
+								<div class="fixedFont">opera.link.notes.<b><a href="../symbols/opera.link.notes.html#.createSeparator">createSeparator</a></b>()
 								</div>
-								<div class="description">Create a new note separator</div>
+								<div class="description">Creates a new note separator</div>
 							</td>
 						</tr>
 					
@@ -407,7 +407,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">opera.link.notes.</span><b>create</b>(params, parent, callback)
+					<span class="light">opera.link.notes.</span><b>create</b>()
 					
 					</div>
 					<div class="description">
@@ -423,22 +423,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Object}</span> <b>params</b>
+									<span class="light fixedFont">{arguments}</span> <b>...</b>
 									
 								</dt>
-								<dd>The note's properties</dd>
-							
-								<dt>
-									<span class="light fixedFont">{null|String}</span> <b>parent</b>
-									
-								</dt>
-								<dd>The parent folder's id</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function(result)}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Function which is called with the result		of the request. The function is passed one argument, an object with 		two properties: "status", the response code, and "response", the JSON 		parsed response body.</dd>
+								<dd>This function has the following overloads:		<dl>			<dt class="fixedFont"><b>create</b>(params, callback)</dt>			<dd>				<dl>					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>					<dd>The note's properties.</dd>					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>					<dd>A function which will be called with the result of the request.</dd>				</dl>			</dd>			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>			<dd>				<dl>					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>					<dd>The note's properties.</dd>					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>					<dd>The id of the parent folder.</dd>					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>					<dd>A function which will be called with the result of the request.</dd>				</dl>			</dd>		</dl>		In either case, the callback function is passed one argument, an object 		with two properties: "status", the response code, and "response", the JSON 		parsed response body.</dd>
 							
 							</dl>
 						
@@ -455,7 +443,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">opera.link.notes.</span><b>createFolder</b>(params, parent, callback)
+					<span class="light">opera.link.notes.</span><b>createFolder</b>()
 					
 					</div>
 					<div class="description">
@@ -471,22 +459,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Object}</span> <b>params</b>
+									<span class="light fixedFont">{arguments}</span> <b>...</b>
 									
 								</dt>
-								<dd>The note's properties</dd>
-							
-								<dt>
-									<span class="light fixedFont">{null|String}</span> <b>parent</b>
-									
-								</dt>
-								<dd>The parent folder's id</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function(result)}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Function which is called with the result		of the request. The function is passed one argument, an object with 		two properties: "status", the response code, and "response", the JSON 		parsed response body.</dd>
+								<dd>This function has the following overloads:		<dl>			<dt class="fixedFont"><b>create</b>(params, callback)</dt>			<dd>				<dl>					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>					<dd>The note folder's properties.</dd>					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>					<dd>A function which will be called with the result of the request.</dd>				</dl>			</dd>			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>			<dd>				<dl>					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>					<dd>The note folder's properties.</dd>					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>					<dd>The id of the parent folder.</dd>					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>					<dd>A function which will be called with the result of the request.</dd>				</dl>			</dd>		</dl>		In either case, the callback function is passed one argument, an object 		with two properties: "status", the response code, and "response", the JSON 		parsed response body.</dd>
 							
 							</dl>
 						
@@ -503,11 +479,11 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">opera.link.notes.</span><b>createSeparator</b>(parent, callback)
+					<span class="light">opera.link.notes.</span><b>createSeparator</b>()
 					
 					</div>
 					<div class="description">
-						Create a new note separator
+						Creates a new note separator
 						
 						
 					</div>
@@ -519,16 +495,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{null|String}</span> <b>parent</b>
+									<span class="light fixedFont">{arguments}</span> <b>...</b>
 									
 								</dt>
-								<dd>The parent folder's id</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function(result)}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Function which is called with the result		of the request. The function is passed one argument, an object with 		two properties: "status", the response code, and "response", the JSON 		parsed response body.</dd>
+								<dd>This function has the following overloads:		<dl>			<dt class="fixedFont"><b>create</b>(params, callback)</dt>			<dd>				<dl>					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>					<dd>A function which will be called with the result of the request.</dd>				</dl>			</dd>			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>			<dd>				<dl>					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>					<dd>The id of the parent folder.</dd>					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>					<dd>A function which will be called with the result of the request.</dd>				</dl>			</dd>		</dl>		In either case, the callback function is passed one argument, an object 		with two properties: "status", the response code, and "response", the JSON 		parsed response body.</dd>
 							
 							</dl>
 						
@@ -817,7 +787,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jul 22 2011 01:37:03 GMT-0500 (CDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jul 22 2011 13:12:35 GMT-0500 (CDT)
 		</div>
 	</body>
 </html>

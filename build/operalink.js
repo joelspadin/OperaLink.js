@@ -635,14 +635,41 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 	
 	/**
 	 * Creates a new bookmark
-	 * @param {Object} params The bookmark's properties
-	 * @param {null|String} parent The parent folder's id
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The bookmark's properties.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The bookmark's properties.</dd>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.create = function(params, parent, callback) {
+	this.create = function(params) {
+		var parent = null;
+		var callback = arguments[1];
+		if (typeof callback == 'string') {
+			parent = arguments[1];
+			callback = arguments[2];
+		}
+		
 		params.item_type = 'bookmark';
 		util.post('create', type, parent, params, function(data) { 
 			opera.link.util.simplify(data, callback);
@@ -651,14 +678,41 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 
 	/**
 	 * Creates a new bookmark folder
-	 * @param {Object} params The bookmark's properties
-	 * @param {null|String} parent The parent folder's id
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The bookmark folder's properties.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The bookmark folder's properties.</dd>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.createFolder = function(params, parent, callback) {
+	this.createFolder = function(params) {
+		var parent = null;
+		var callback = arguments[1];
+		if (typeof callback == 'string') {
+			parent = arguments[1];
+			callback = arguments[2];
+		}
+		
 		params.item_type = 'bookmark_folder';
 		util.post('create', type, parent, params, function(data) { 
 			opera.link.util.simplify(data, callback);
@@ -666,16 +720,38 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 	}
 	
 	/**
-	 * Create a new bookmark separator
-	 * @param {null|String} parent The parent folder's id
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * Creates a new bookmark separator
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.createSeparator = function(parent, callback) {
+	this.createSeparator = function(callback) {
+		var parent = null;
+		if (typeof callback == 'string') {
+			parent = arguments[0];
+			callback = arguments[1];
+		}
+		
 		var params = {item_type: 'bookmark_separator'};
-		parent = parent || null;
 		util.post('create', type, parent, params, function(data) { 
 			opera.link.util.simplify(data, callback);
 		});
@@ -803,14 +879,41 @@ opera.link.notes = new function OperaLinkNotes() {
 	
 	/**
 	 * Creates a new note
-	 * @param {Object} params The note's properties
-	 * @param {null|String} parent The parent folder's id
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The note's properties.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The note's properties.</dd>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.create = function(params, parent, callback) {
+	this.create = function(params) {
+		var parent = null;
+		var callback = arguments[1];
+		if (typeof callback == 'string') {
+			parent = arguments[1];
+			callback = arguments[2];
+		}
+		
 		params.item_type = 'note';
 		util.post('create', type, parent, params, function(data) { 
 			opera.link.util.simplify(data, callback);
@@ -819,14 +922,41 @@ opera.link.notes = new function OperaLinkNotes() {
 
 	/**
 	 * Creates a new note folder
-	 * @param {Object} params The note's properties
-	 * @param {null|String} parent The parent folder's id
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The note folder's properties.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
+	 *					<dd>The note folder's properties.</dd>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.createFolder = function(params, parent, callback) {
+	this.createFolder = function(params) {
+		var parent = null;
+		var callback = arguments[1];
+		if (typeof callback == 'string') {
+			parent = arguments[1];
+			callback = arguments[2];
+		}
+		
 		params.item_type = 'note_folder';
 		util.post('create', type, parent, params, function(data) { 
 			opera.link.util.simplify(data, callback);
@@ -834,16 +964,38 @@ opera.link.notes = new function OperaLinkNotes() {
 	}
 	
 	/**
-	 * Create a new note separator
-	 * @param {null|String} parent The parent folder's id
-	 * @param {Function(result)} callback Function which is called with the result
-	 *		of the request. The function is passed one argument, an object with 
-	 *		two properties: "status", the response code, and "response", the JSON 
+	 * Creates a new note separator
+	 * @param {arguments} ... This function has the following overloads:
+	 *		<dl>
+	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dd>
+	 *				<dl>
+	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
+	 *					<dd>The id of the parent folder.</dd>
+	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
+	 *					<dd>A function which will be called with the result of the request.</dd>
+	 *				</dl>
+	 *			</dd>
+	 *		</dl>
+	 *		In either case, the callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
-	this.createSeparator = function(parent, callback) {
+	this.createSeparator = function(callback) {
+		var parent = null;
+		if (typeof callback == 'string') {
+			parent = arguments[0];
+			callback = arguments[1];
+		}
+		
 		var params = {item_type: 'note_separator'};
-		parent = parent || null;
 		util.post('create', type, parent, params, function(data) { 
 			opera.link.util.simplify(data, callback);
 		});

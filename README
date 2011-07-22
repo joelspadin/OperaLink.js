@@ -1,4 +1,4 @@
-OperaLink.js 0.9 alpha
+OperaLink.js 0.91 alpha
 
 This is a JavaScript library for interacting with Opera Link. See operalink.js
 for usage details.
@@ -30,10 +30,6 @@ TODO:
 - Finish testing things
 - Write import functions
 
-Things Tested So Far:
-- Getting bookmarks/folders
-- Creating bookmarks/folders
-- Trashing bookmarks
 
 
 For more information:
