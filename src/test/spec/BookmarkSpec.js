@@ -5,7 +5,13 @@ describe("Bookmarks", function() {
 	var server = OLinkServer;
 	
 	function cb(data) {
-		console.log('status: ' + data.status + '\nresponse: ' + data.response);
+		var response = '';
+		if (typeof data.response != 'object')
+			response = data.response;
+		else
+			response = writeObject(data.response);
+		
+		console.log('status: ' + data.status + '\nresponse: ' + response);
 	}
 	
 	//olink.debug = true;
@@ -15,7 +21,7 @@ describe("Bookmarks", function() {
 		setupBookmarks();
 	})
 
-	it('request to "/bookmark" should return Method Not Allowed', function() {
+	it('GET request to /bookmark/ should return 405: Method Not Allowed', function() {
 		var callback = sinon.spy();
 		bookmarks.get('', callback);
 		server.respond();
@@ -33,79 +39,158 @@ describe("Bookmarks", function() {
 		
 		expect(callback).toHaveBeenCalledWith({
 			status: olink.response.Ok,
-			response: fakeBookmarkData
+			response: bookmarkData
 		});
 	});
 	
 	it('should be able to get a bookmark by ID', function() {
 		var callback = sinon.spy();
-		bookmarks.get('D57C973715B847CAB4A8B8398D325CAC', callback);
+		bookmarks.get(bookmarkId, callback);
 		server.respond();
 		
 		expect(callback).toHaveBeenCalledWith({
 			status: olink.response.Ok,
-			response: server.findById(fakeBookmarkData, 'D57C973715B847CAB4A8B8398D325CAC')
+			response: server.findById(bookmarkData, bookmarkId)
 		});
 	});
 	
 	it("should be able to get a bookmark folder's children by its ID", function() {
 		var callback = sinon.spy();
-		bookmarks.getAll('4E1601F6F30511DB9CA51FD19A7AAECA', callback);
+		bookmarks.getAll(folderId, callback);
 		server.respond();
 		
 		expect(callback).toHaveBeenCalledWith({
 			status: olink.response.Ok,
-			response: server.findById(fakeBookmarkData, '4E1601F6F30511DB9CA51FD19A7AAECA').children
+			response: server.findById(bookmarkData, folderId).children
 		});
 	})
 	
 	it('should be able to get a bookmark within a folder by its ID', function() {
 		var callback = sinon.spy();
-		bookmarks.get('4E1601F6F30511DB9CA51FD19A7AAECA/740C2D4ABC09468DB5A26170AF2609E6', callback);
+		bookmarks.get(folderId + '/' + childId, callback);
 		server.respond();
 		
 		expect(callback).toHaveBeenCalledWith({
 			status: olink.response.Ok,
-			response: server.findById(fakeBookmarkData, '4E1601F6F30511DB9CA51FD19A7AAECA/740C2D4ABC09468DB5A26170AF2609E6')
+			response: server.findById(bookmarkData, folderId + '/' + childId)
 		});
 	});
+	
+	it('should be able to create a bookmark', function() {
+		var callback = sinon.spy();
+		bookmarks.create({ title: 'Test Bookmark', uri: 'http://opera.com' }, callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: createBookmarkData
+		})
+	});
+	
+	it('should be able to create a bookmark folder', function() {
+		var callback = sinon.spy(cb);
+		bookmarks.createFolder({ title: 'Test Folder' }, callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: createFolderData
+		})
+	});
+	
+	it('should be able to create a bookmark separator', function() {
+		olink.debug = true;
+		var callback = sinon.spy(cb);
+		bookmarks.createSeparator(callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: createSeparatorData
+		})
+	});
+	
+	
 	
 	
 	function setupBookmarks() {
 		var respond = OLinkServer.makeResponse;
 		var server = OLinkServer.server;
 
-		server.respondWith(/\/bookmark(\/\?.+)$/, function(xhr) {
+		server.respondWith(/\/bookmark\/?(\?.+)?$/, function(xhr) {
 			if (xhr.method == 'GET')
-				respond(405, 'html', '', xhr);
+				OLinkServer.methodNotAllowed(xhr);
+			else {
+				var request = JSON.parse(xhr.requestBody);
+				switch (request.api_method) {
+					case 'create':
+						if (request.item_type == 'bookmark')
+							respond(200, 'json', createItem(request, createBookmarkData), xhr);
+						else if (request.item_type == 'bookmark_folder')
+							respond(200, 'json', createItem(request, createFolderData), xhr);
+						else if (request.item_type == 'bookmark_separator')
+							respond(200, 'json', createItem(request, createSeparatorData), xhr);
+						else
+							OlinkServer.badRequest(xhr);
+						break;
+					default:
+						OLinkServer.methodNotAllowed(xhr);
+				}
+				
+			}
 		});
 
-		server.respondWith(/\/bookmark\/descendants(\/?.+)$/, function(xhr) {
+		server.respondWith(/\/bookmark\/descendants\/?(\?.+)?$/, function(xhr) {
 			if (xhr.method == 'GET')
-				respond(200, 'json', fakeBookmarkData, xhr);
+				respond(200, 'json', bookmarkData, xhr);
 		});
 
-		server.respondWith(/\/bookmark\/([0-9A-Z/]+)(\/\?.+)$/, function(xhr, id) {
+		server.respondWith(/\/bookmark\/([0-9A-Z/]+)\/?(\?.+)?$/, function(xhr, id) {
 			if (xhr.method == 'GET') {
-				var data = OLinkServer.findById(fakeBookmarkData, id);
+				var data = OLinkServer.findById(bookmarkData, id);
 				respond(200, 'json', data, xhr);
 			}
 		});
 
-		server.respondWith(/\/bookmark\/([0-9A-Z/]+)\/descendants(\/\?.+)$/, function(xhr, id) {
+		server.respondWith(/\/bookmark\/([0-9A-Z/]+)\/descendants\/?(\?.+)?$/, function(xhr, id) {
 			if (xhr.method == 'GET') {
-				var data = OLinkServer.findById(fakeBookmarkData, id).children;
+				var data = OLinkServer.findById(bookmarkData, id).children;
 				respond(200, 'json', data, xhr);
 			}
 		});
 
 	}
+	
+	// Simulates creating a bookmark item
+	function createItem(props, template) {
+		// duplicate the template object
+		var item = cloneObject(template);
+		for (var key in props) {
+			switch (key) {
+				case 'api_method':
+				case 'api_output': break;
+				case 'item_type':
+					item[key] = props[key];
+					break;
+				default:
+					item.properties[key] = props[key];
+					break;
+			}
+		}
 
+		return item;
+	}
+	
 
-	var fakeBookmarkData = [
+	var folderId = '4E1601F6F30511DB9CA51FD19A7AAECA';
+	var childId = '740C2D4ABC09468DB5A26170AF2609E6';
+	var bookmarkId = 'D57C973715B847CAB4A8B8398D325CAC';
+	
+
+	var bookmarkData = [
 		{
 			'item_type': 'bookmark_folder',
-			'id': '4E1601F6F30511DB9CA51FD19A7AAECA',
+			'id': folderId,
 			'properties': {
 				'show_in_panel': false,
 				'title': 'Trash',
@@ -117,7 +202,7 @@ describe("Bookmarks", function() {
 			'children': [
 				{
 					'item_type': 'bookmark',
-					'id': '740C2D4ABC09468DB5A26170AF2609E6',
+					'id': childId,
 					'properties': {
 						 'created': '2011-04-24T02:39:52Z',
 						 'uri': 'http://test.com',
@@ -128,7 +213,7 @@ describe("Bookmarks", function() {
 		},
 		{
 			'item_type': 'bookmark',
-			'id': 'D57C973715B847CAB4A8B8398D325CAC',
+			'id': bookmarkId,
 			'properties': {
 				'created': '2011-04-19T04:39:35Z',
 				'uri': 'http://opera.com',
@@ -137,6 +222,30 @@ describe("Bookmarks", function() {
 		}
 	]
 	
+	var createBookmarkData = {
+		"item_type": "bookmark",
+		"id": "631945F274D24110A6FF963189285D2F",
+		"properties": {
+			"created": "2011-08-02T04:38:13Z",
+			"uri": "http://opera.com",
+			"title": "Test Bookmark"
+		}
+	}
+	
+	var createFolderData = {
+		"item_type": "bookmark_folder",
+		"id": "00DFB26468614E2D9CA560A930B3DDD4",
+		"properties": {
+			"created": "2011-08-02T04:54:31Z",
+			"title": "Test Folder"
+		}
+	}
+	
+	var createSeparatorData = {
+		"item_type": "bookmark_separator",
+		"id": "1F468DD981EB4B6D93B5BACEDE119180",
+		"properties": {}
+	}
 	
 });
 

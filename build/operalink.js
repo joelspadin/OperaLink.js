@@ -535,13 +535,15 @@ opera.link.util = new function OperaLinkUtils() {
 	 * fail silently without calling the callback function.
 	 * @param {String} src The location of the icon
 	 * @param {Function(dataurl)} callback A function which will be called with 
-	 *		the result of the request. The function should is passed one argument, 
+	 *		the result of the request. The function is passed one argument: 
 	 *		either the icon encoded as a data URL, or null if the request failed
+	 *	@param {Number} [size] The size of the icon (defaults to 16)
 	 */
-	this.getIcon = function(src, callback) {
+	this.getIcon = function(src, callback, size) {
 		var img = new Image();
+		size = size || 16
 		img.onload = function() {
-			callback(opera.link.util.makeIcon(img));
+			callback(opera.link.util.makeIcon(img, size));
 		}
 		img.onerror = function() {
 			callback(null);
@@ -723,14 +725,14 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 	 * Creates a new bookmark separator
 	 * @param {arguments} ... This function has the following overloads:
 	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dt class="fixedFont"><b>create</b>(callback)</dt>
 	 *			<dd>
 	 *				<dl>
 	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
 	 *					<dd>A function which will be called with the result of the request.</dd>
 	 *				</dl>
 	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dt class="fixedFont"><b>create</b>(parent, callback)</dt>
 	 *			<dd>
 	 *				<dl>
 	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
@@ -967,14 +969,14 @@ opera.link.notes = new function OperaLinkNotes() {
 	 * Creates a new note separator
 	 * @param {arguments} ... This function has the following overloads:
 	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
+	 *			<dt class="fixedFont"><b>create</b>(callback)</dt>
 	 *			<dd>
 	 *				<dl>
 	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
 	 *					<dd>A function which will be called with the result of the request.</dd>
 	 *				</dl>
 	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
+	 *			<dt class="fixedFont"><b>create</b>(parent, callback)</dt>
 	 *			<dd>
 	 *				<dl>
 	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>

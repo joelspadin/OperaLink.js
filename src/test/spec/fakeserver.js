@@ -53,13 +53,14 @@ var OLinkServer = new function() {
 	
 	this.makeResponse = function(status, type, data, xhr) {
 		var h = {};
-		type = type || 'text/html';
+		type = type || 'text';
 		data = data || '';
 		
 		if (typeof data === 'object')
 			data = JSON.stringify(data);
 		
 		switch (type) {
+			case 'text': h['Content-Type'] = 'text/plain'; break;
 			case 'html': h['Content-Type'] = 'text/html; charset=utf-8'; break;
 			case 'json': h['Content-Type'] = 'application/json; charset=utf-8'; break;
 			break;
@@ -71,6 +72,14 @@ var OLinkServer = new function() {
 			xhr.respond(status, h, data);
 		
 		return [status, h, data];
+	}
+	
+	this.badRequest = function(xhr) {
+		this.makeResponse(400, 'text', 'Bad Request', xhr);
+	}
+	
+	this.methodNotAllowed = function(xhr) {
+		this.makeResponse(405, 'html', '', xhr);
 	}
 	
 }
