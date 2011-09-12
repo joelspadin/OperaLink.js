@@ -235,7 +235,7 @@ opera.link = new function OperaLink() {
 		xhr.send(null);
 		
 		if (this.debug)
-			console.log(url);
+			console.debug(url);
 	}
 	
 	/**
@@ -268,7 +268,7 @@ opera.link = new function OperaLink() {
 		xhr.send(requestBody);
 		
 		if (this.debug)
-			console.log(url);
+			console.debug(url);
 	}
 	
 	/**

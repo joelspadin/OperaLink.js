@@ -11,7 +11,7 @@ describe("Bookmarks", function() {
 		else
 			response = writeObject(data.response);
 		
-		console.log('status: ' + data.status + '\nresponse: ' + response);
+		console.debug('status: ' + data.status + '\nresponse: ' + response);
 	}
 	
 	//olink.debug = true;
@@ -78,7 +78,7 @@ describe("Bookmarks", function() {
 	
 	it('should be able to create a bookmark', function() {
 		var callback = sinon.spy();
-		bookmarks.create({ title: 'Test Bookmark', uri: 'http://opera.com' }, callback);
+		bookmarks.create({title: 'Test Bookmark', uri: 'http://opera.com'}, callback);
 		server.respond();
 		
 		expect(callback).toHaveBeenCalledWith({
@@ -88,8 +88,8 @@ describe("Bookmarks", function() {
 	});
 	
 	it('should be able to create a bookmark folder', function() {
-		var callback = sinon.spy(cb);
-		bookmarks.createFolder({ title: 'Test Folder' }, callback);
+		var callback = sinon.spy();
+		bookmarks.createFolder({title: 'Test Folder'}, callback);
 		server.respond();
 		
 		expect(callback).toHaveBeenCalledWith({
@@ -99,8 +99,7 @@ describe("Bookmarks", function() {
 	});
 	
 	it('should be able to create a bookmark separator', function() {
-		olink.debug = true;
-		var callback = sinon.spy(cb);
+		var callback = sinon.spy();
 		bookmarks.createSeparator(callback);
 		server.respond();
 		
@@ -110,7 +109,79 @@ describe("Bookmarks", function() {
 		})
 	});
 	
+	it('should be able to move a bookmark relative to an item', function() {
+		var callback = sinon.spy();
+		bookmarks.move(bookmarkId, folderId, 'before', callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: server.findById(bookmarkData, bookmarkId),
+		})
+	});
 	
+	it('should be able to move a bookmark into a folder', function() {
+		var callback = sinon.spy();
+		bookmarks.move(bookmarkId, folderId, 'into', callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: server.findById(bookmarkData, bookmarkId),
+		})
+	});
+	
+	
+	it('should be able to delete an item', function() {
+		var callback = sinon.spy();
+		bookmarks.deleteItem(bookmarkId, callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Deleted,
+			response: ''
+		})
+	})
+	
+	it('should not be able to delete the trash folder', function() {
+		var callback = sinon.spy();
+		bookmarks.deleteItem(trashId, callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.BadRequest,
+			response: 'Bad Request'
+		})
+	})
+	
+	it('should be able to trash an item', function() {
+		var callback = sinon.spy();
+		bookmarks.trash(bookmarkId, callback);
+		server.respond();
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: server.findById(bookmarkData, bookmarkId)
+		})
+	})
+	
+	it('should be able to update an item', function() {
+		var callback = sinon.spy();
+		bookmarks.update(bookmarkId, {
+			uri: 'http://chaosinacan.com',
+			title: 'Chaos in a Can',
+		}, callback);
+		server.respond();
+		
+		var newItem = cloneObject(server.findById(bookmarkData, bookmarkId));
+		newItem.properties.uri = 'http://chaosinacan.com';
+		newItem.properties.title = 'Chaos in a Can';
+		
+		expect(callback).toHaveBeenCalledWith({
+			status: olink.response.Ok,
+			response: newItem
+		})
+	})
 	
 	
 	function setupBookmarks() {
@@ -133,6 +204,7 @@ describe("Bookmarks", function() {
 						else
 							OlinkServer.badRequest(xhr);
 						break;
+						
 					default:
 						OLinkServer.methodNotAllowed(xhr);
 				}
@@ -146,9 +218,52 @@ describe("Bookmarks", function() {
 		});
 
 		server.respondWith(/\/bookmark\/([0-9A-Z/]+)\/?(\?.+)?$/, function(xhr, id) {
-			if (xhr.method == 'GET') {
-				var data = OLinkServer.findById(bookmarkData, id);
-				respond(200, 'json', data, xhr);
+			var item = OLinkServer.findById(bookmarkData, id);
+			
+			if (!item) 
+				OLinkServer.notFound(xhr);
+			else if (xhr.method == 'GET') 
+				respond(200, 'json', item, xhr);
+			else {
+				var request = JSON.parse(xhr.requestBody);
+				switch (request.api_method) {
+					case 'move':
+						var referenceItem = OLinkServer.findById(bookmarkData, request.reference_item);
+						var pos = request.relative_position;
+						
+						if (item == referenceItem || (pos != 'before' && pos != 'after' && pos != 'into')) 
+							OLinkServer.badRequest(xhr);		
+						else if (pos == 'into' && request.reference_item == '')
+							respond(200, 'json', item, xhr);
+						else if (!referenceItem || (pos == 'into' && referenceItem.item_type != 'bookmark_folder'))
+							OLinkServer.badRequest(xhr);
+						else
+							respond(200, 'json', item, xhr);
+						break;
+						
+					case 'update':
+						var newItem = createItem(request, item);
+						respond(200, 'json', newItem, xhr);
+						break;
+						
+					case 'trash':
+						if (item.properties.type == 'trash')
+							OLinkServer.badRequest(xhr);
+						else
+							respond(200, 'json', item, xhr);
+						break;	
+						
+					case 'delete':
+						if (item.properties.type == 'trash')
+							OLinkServer.badRequest(xhr);
+						else
+							OLinkServer.deleted(xhr);
+
+						break;
+						
+					default:
+						OLinkServer.methodNotAllowed(xhr);
+				}
 			}
 		});
 
@@ -168,13 +283,13 @@ describe("Bookmarks", function() {
 		for (var key in props) {
 			switch (key) {
 				case 'api_method':
-				case 'api_output': break;
+				case 'api_output':break;
 				case 'item_type':
 					item[key] = props[key];
 					break;
+					
 				default:
 					item.properties[key] = props[key];
-					break;
 			}
 		}
 
@@ -183,6 +298,7 @@ describe("Bookmarks", function() {
 	
 
 	var folderId = '4E1601F6F30511DB9CA51FD19A7AAECA';
+	var trashId = '4E1601F6F30511DB9CA51FD19A7AAECA';
 	var childId = '740C2D4ABC09468DB5A26170AF2609E6';
 	var bookmarkId = 'D57C973715B847CAB4A8B8398D325CAC';
 	

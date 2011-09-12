@@ -77,6 +77,14 @@ var OLinkServer = new function() {
 	this.badRequest = function(xhr) {
 		this.makeResponse(400, 'text', 'Bad Request', xhr);
 	}
+
+	this.notFound = function(xhr) {
+		this.makeResponse(404, 'text', 'Not Found', xhr);
+	}
+	
+	this.deleted = function(xhr) {
+		this.makeResponse(204, 'text', '', xhr);
+	}
 	
 	this.methodNotAllowed = function(xhr) {
 		this.makeResponse(405, 'html', '', xhr);
