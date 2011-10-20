@@ -1,4 +1,5 @@
-/*
+/**
+ * @license
  * Copyright 2011 Joel Spadin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +15,8 @@
  * limitations under the License.
  */
 
-/*
+/**
+ * @overview
  * This library facilitates making requests to the Opera Link synchronization
  * server. It is intended for use in Opera extensions, but it can be used in any
  * situation where JavaScript security allows cross domain XML HTTP requests.
@@ -94,7 +96,7 @@ try {
  * Add access to https://auth.opera.com and https://link.api.opera.com 
  * in your extension's config.xml. 
  * @requires oauth.js 
- * @requires sha.js.
+ * @requires sha.js
  */
 opera.link = new function OperaLink() {
 	
@@ -147,13 +149,14 @@ opera.link = new function OperaLink() {
 	
 	/**
 	 * The location of the Opera Link REST API
+	 * @default 'https://link.api.opera.com/rest/'
 	 * @type String 
 	 */
 	this.apiurl = 'https://link.api.opera.com/rest/';
 	
 	/**
 	 * If true, the library will print information about requests using console.log.
-	 * Defaults to false.
+	 * @default false
 	 * @type Boolean
 	 */
 	this.debug = false;
@@ -161,7 +164,7 @@ opera.link = new function OperaLink() {
 	/**
 	 * If true, the results of actions that only return one object will be 
 	 * simplified from an array containing one object to just the one object.
-	 * Defaults to true.
+	 * @default true
 	 * @type Boolean
 	 */
 	this.simplifyResults = true;
@@ -171,12 +174,14 @@ opera.link = new function OperaLink() {
 	 * call this function instead of opera.extension.tabs.create to show the user
 	 * the authorization page. The function should take one parameter, the url
 	 * of the authorization page.
+	 * @default null
 	 * @type Function(url)
 	 */
 	this.authorizeFunction = null;
 	
 	/**
 	 * Sets the storage object used by saveToken and loadToken
+	 * @default widget.preferences if available, otherwise localStorage
 	 * @type Storage
 	 */
 	this.storage = (widget && widget.preferences) ? widget.preferences : localStorage;
@@ -232,7 +237,7 @@ opera.link = new function OperaLink() {
 		xhr.send(null);
 		
 		if (this.debug)
-			console.debug(url);
+			console.debug('GET', url);
 	}
 	
 	/**
@@ -265,7 +270,7 @@ opera.link = new function OperaLink() {
 		xhr.send(requestBody);
 		
 		if (this.debug)
-			console.debug(url);
+			console.debug('POST', url, message.parameters);
 	}
 	
 	/**
@@ -515,6 +520,7 @@ opera.link.util = new function OperaLinkUtils() {
 	 * Returns an image data URL suitable for use when creating bookmarks
 	 * @param {HTMLImageElement} image The image to convert
 	 * @param {Number} [size] The size of the icon (defaults to 16)
+	 * @returns {String} A data URL of the icon formatted as image/png
 	 */
 	this.makeIcon = function(image, size) {
 		size = size || 16;
@@ -555,7 +561,7 @@ opera.link.util = new function OperaLinkUtils() {
 	 * Helper function to simplify results of requests that only return one item.
 	 * Replaces single element arrays with the one element.
 	 * @param {Object} data The result object
-	 * @param {Function(result)} The original callback function
+	 * @param {Function(result)} callback The original callback function
 	 */
 	this.simplify = function(data, callback) {
 		if (opera.link.simplifyResults && data.response.length == 1) 
