@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>JSDoc: Namespace: link</title>
+	
+	<script src="http://shjs.sourceforge.net/sh_main.min.js"> </script>
+    <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"> </script>
+    
+    <link type="text/css" rel="stylesheet" href="styles/node-dark.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Namespace: link</h1>
+    
+    
+    
+    <section>
+     
+    <header>
+        <h2><span class="ancestors"><a href="opera.html">opera</a>.</span>link</h2>
+        
+    </header>  
+    
+    <article>
+        <div class="container-overview">
+        <p class="description">Handles communication and authentication with the Opera Link server.Add access to https://auth.opera.com and https://link.api.opera.com in your extension's config.xml.</p><dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 99</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+        </div>
+        
+        
+        
+        
+        
+        
+            <h3 class="subsection-title">Requires</h3>
+            
+            <ul>
+                <li>module:oauth.js</li>
+            
+                <li>module:sha.js.</li>
+            </ul>
+        
+        
+        
+        
+        
+            
+            <h3 class="subsection-title">Namespaces</h3>
+            
+            <dl>
+                <dt><a href="namespaces.html#opera.link.bookmarks"><a href="opera.link.bookmarks.html">bookmarks</a></a></dt>
+                <dd></dd>
+            
+                <dt><a href="namespaces.html#opera.link.notes"><a href="opera.link.notes.html">notes</a></a></dt>
+                <dd></dd>
+            
+                <dt><a href="namespaces.html#opera.link.searchengines"><a href="opera.link.searchengines.html">searchengines</a></a></dt>
+                <dd></dd>
+            
+                <dt><a href="namespaces.html#opera.link.speeddial"><a href="opera.link.speeddial.html">speeddial</a></a></dt>
+                <dd></dd>
+            
+                <dt><a href="namespaces.html#opera.link.urlfilter"><a href="opera.link.urlfilter.html">urlfilter</a></a></dt>
+                <dd></dd>
+            
+                <dt><a href="namespaces.html#opera.link.util"><a href="opera.link.util.html">util</a></a></dt>
+                <dd></dd>
+            </dl>
+            
+        
+        
+        
+            
+            <h3 class="subsection-title">Members</h3>
+            
+            <dl>
+<dt>
+    <h4 class="name" id="apiurl"><span class="type-signature"></span>apiurl<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        The location of the Opera Link REST API
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 152</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+
+<dt>
+    <h4 class="name" id="authorizeFunction"><span class="type-signature"></span>authorizeFunction<span class="type-signature"> :Function(url)</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        If using this library outside of extensions, opera.link.requestToken willcall this function instead of opera.extension.tabs.create to show the userthe authorization page. The function should take one parameter, the urlof the authorization page.
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 176</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+
+<dt>
+    <h4 class="name" id="debug"><span class="type-signature"></span>debug<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        If true, the library will print information about requests using console.log.Defaults to false.
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 159</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+
+<dt>
+    <h4 class="name" id="provider"><span class="type-signature"></span>provider<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        Parameters used for OAuth authentication. Don't change these unless you know what you're doing.
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 200</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+
+<dt>
+    <h4 class="name" id="response"><span class="type-signature">&lt;readonly> </span>response<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        Enum of the response codes used by Opera Link
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+        <h5 class="subsection-title">Properties:</h5>
+        
+        <dl>
+
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>Ok</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">200 : The request completed successfully.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Deleted</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">204 : The item was successfully deleted.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>BadRequest</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">400 : The request is invalid and cannot be processed. The cause of this isoften missing a required parameter or trying to execute an invalidmethod on an item.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Unauthorized</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">401 : The request cannot be allowed, possibly because your authenticationinformation is invalid or because too many requests sent in a shortperiod made the throttling ban them.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>NotFound</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">404 : The item you seek or wish to manipulate was not found</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>MethodNotAllowed</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">405 : The method you tried to use is not allowed</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>InternalServerError</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">500 : This is an unexpected server error.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>NotImplemented</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">501 : You are trying to execute a method that is not implemented. This canhappen when you execute a method that is not supported by the specificdatatype or if you misspelled a method name in the request.</td>
+        </tr>
+	
+	
+	</tbody>
+</table></dl>
+        
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 106</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+
+<dt>
+    <h4 class="name" id="simplifyResults"><span class="type-signature"></span>simplifyResults<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        If true, the results of actions that only return one object will be simplified from an array containing one object to just the one object.Defaults to true.
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 167</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+
+<dt>
+    <h4 class="name" id="storage"><span class="type-signature"></span>storage<span class="type-signature"> :Storage</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <p class="description">
+        Sets the storage object used by saveToken and loadToken
+    </p>
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 182</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+</dd>
+</dl>
+            
+        
+        
+        
+            
+            <h3 class="subsection-title">Methods</h3>
+            
+            <dl><dt>
+    <h4 class="name" id="authorize"><span class="type-signature"></span>authorize<span class="signature">(token, secret)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Sets the OAuth access token and token secret. These are specific to each user.
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The user's access token</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>secret</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The user's access token secret</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 287</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="clearSavedToken"><span class="type-signature"></span>clearSavedToken<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Deletes the saved OAuth token and token secret from storage
+    </p>
+    
+    
+    
+    
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 428</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="consumer"><span class="type-signature"></span>consumer<span class="signature">(key, secret)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Sets the OAuth consumer key and secret. These are given to you when youset up a new application with Opera Link and are specific to your application.
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The application's consumer key</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>secret</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The application's consumer secret</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 277</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="deauthorize"><span class="type-signature"></span>deauthorize<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Unsets the OAuth access token and token secret. To clear tokens that aresaved to storage, use clearSavedToken() instead.
+    </p>
+    
+    
+    
+    
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 296</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(url, params, callback)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Sends an OAuth GET request to the specified URL
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The location to send the request</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+            
+            <td class="type">
+            Object
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The data to send. Use null for no data</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            Function(xhr)
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Function called when the request completes.		The callback is passed one argument: the XMLHttpRequest object used</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 215</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="getAccessToken"><span class="type-signature"></span>getAccessToken<span class="signature">(requestToken, requestSecret, verifier, callback, <span class="optional">error</span>)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Requests a new access token.
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>requestToken</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+                <td class="attributes">
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The request token</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>requestSecret</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+                <td class="attributes">
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The request token secret</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>verifier</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+                <td class="attributes">
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The 6-digit verifier code</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            Function(data)
+            </td>
+            
+            
+                <td class="attributes">
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Function that is called if the request		succeeds. The callback is passed one argument, an object with two		properties: "token", the access token, and "secret", the secret that 		goes with the token.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+            
+            <td class="type">
+            Function(xhr)
+            </td>
+            
+            
+                <td class="attributes">
+                &lt;optional><br>
+                </td>
+            
+            
+            
+            
+            <td class="description last">Function that is called if the request fails. 		The function is passed one argument: the XMLHttpRequest object used.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 332</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="loadToken"><span class="type-signature"></span>loadToken<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Loads the OAuth token and token secret stored in the values oauth_token and oauth_secret.
+    </p>
+    
+    
+    
+    
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 414</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+<div class="param-desc">
+    True if there were token values to load, false otherwise
+</div>
+
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+		<span class="param-type">Boolean</span> 
+		
+	</dd>
+</dl>
+
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="post"><span class="type-signature"></span>post<span class="signature">(url, params, callback)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Sends an OAuth POST request to the specified URL
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+            
+            <td class="type">
+            String
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The location to send the request</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+            
+            <td class="type">
+            Object
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The data to send. Use null for no data</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            Function(xhr)
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Function called when the request completes.		The callback is passed one argument: the XMLHttpRequest object used.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 245</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="requestToken"><span class="type-signature"></span>requestToken<span class="signature">(callback, <span class="optional">error</span>)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Requests a new request token. This will open a new tab where the user cangrant access to your application. The resulting request token, token secret,and 6-digit verifier must be used with opera.link.getAccessToken to get apermanent access token.
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            Function(data)
+            </td>
+            
+            
+                <td class="attributes">
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Function that is called if the request		succeeds. The callback is passed one argument, an object with two		properties: "token", the temporary request token, and "secret", the		secret that goes with the token.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+            
+            <td class="type">
+            Function(xhr)
+            </td>
+            
+            
+                <td class="attributes">
+                &lt;optional><br>
+                </td>
+            
+            
+            
+            
+            <td class="description last">Function that is called if the request fails. 		The function is passed one argument: the XMLHttpRequest object used.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 313</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="saveToken"><span class="type-signature"></span>saveToken<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Saves the current OAuth token and token secret to storage in the valuesoauth_token and oauth_secret.
+    </p>
+    
+    
+    
+    
+    
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 404</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+<dt>
+    <h4 class="name" id="testAuthorization"><span class="type-signature"></span>testAuthorization<span class="signature">(callback)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <p class="description">
+        Tests whether the current authentication tokens are valid
+    </p>
+    
+    
+    
+    
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            Function(success)
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Function which is called with the 		result of the test. The function is passed one argument: true if 		the authorization parameters are correct or false otherwise.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    <dl class="details">
+    
+        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source"><ul class="dummy"><li>C:\Users\Joel\Documents\NetbeansProjects\Opera Extensions\OperaLink.js\src\script\operalink.js, line 355</li></ul></dd>
+	
+	
+	
+	
+	
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+</dd>
+</dl>
+            
+        
+        
+        
+    </article>
+    
+    </section>  
+    
+</div>
+
+<nav>
+    <h3>Namespaces</h3><ul><li><a href="opera.html">opera</a></li><li><a href="opera.link.html">link</a></li><li><a href="opera.link.bookmarks.html">bookmarks</a></li><li><a href="opera.link.notes.html">notes</a></li><li><a href="opera.link.searchengines.html">searchengines</a></li><li><a href="opera.link.speeddial.html">speeddial</a></li><li><a href="opera.link.urlfilter.html">urlfilter</a></li><li><a href="opera.link.util.html">util</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/micmath/jsdoc">JSDoc 3</a> on Thu Oct 20 2011 01:55:56 GMT-0500 (CDT)
+</footer>
+
+<script> sh_highlightDocument(); </script>
+</body>
+</html>

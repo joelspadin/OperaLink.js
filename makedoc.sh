@@ -2,21 +2,24 @@
 source ~/.bash_profile
 
 wdir="`pwd`"
-operalink="$wdir/build/operalink.js"
+operalink="$wdir/src/script/operalink.js"
+winpath="`cygpath -w \"$operalink\"`"
 
 rm -rf ./jsdoc
 
 
-echo "$operalink"
+echo "$winpath"
 #If you want to use this script, change this to the location of JSDoc
-pushd /c/Users/spadija/Programs/Programming/JSDoc
-cp "$operalink" .
+#pushd /c/Users/spadija/Programs/Programming/JSDoc3
+#cp "$operalink" .
 
-rm -rf ./out
+#rm -rf ./out
 
-java -jar jsrun.jar app/run.js -a -t=templates/jsdoc operalink.js
-rm operalink.js
+#java -jar jsrun.jar app/run.js -a -t=templates/jsdoc operalink.js
+#rm operalink.js
 
-cp -r ./out/jsdoc "$wdir/"
+#cp -r ./out/jsdoc "$wdir/"
 
-popd
+#popd
+
+/c/Users/Joel/Programs/Programming/JSDoc3/jsdoc.sh "$winpath"

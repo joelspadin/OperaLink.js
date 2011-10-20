@@ -75,7 +75,8 @@ try {
 	opera;
 } catch (error) {
 	/**
-	 * @namespace Opera
+	 * @namespace
+	 * @desc Nothing to see here. Move along.
 	 */
 	opera = new function Opera() {};
 }
@@ -83,66 +84,62 @@ try {
 try {
 	widget;
 } catch (error) {
-	var widget = undefined;
+	widget = undefined;
 }
 
 
 /**
- * @namespace Handles communication and authentication with the Opera Link server.
- * @requires Add access to https://auth.opera.com and https://link.api.opera.com 
- * in your extension's config.xml. Requires oauth.js and sha.js.
+ * @namespace
+ * @desc Handles communication and authentication with the Opera Link server.
+ * Add access to https://auth.opera.com and https://link.api.opera.com 
+ * in your extension's config.xml. 
+ * @requires oauth.js 
+ * @requires sha.js.
  */
 opera.link = new function OperaLink() {
 	
 	/**
-	 * @class A list of the response codes used by Opera Link
-	 * @static
+	 *	Enum of the response codes used by Opera Link
+	 * @readonly
+	 * @enum {number{
 	 */
 	this.response = {
 		/**
-		 * 200: The request completed successfully.
-		 * @constant
+		 * 200 : The request completed successfully.
 		 */
 		Ok: 200,
 		/**
 		 * 204 : The item was successfully deleted.
-		 * @constant
 		 */
 		Deleted: 204,
 		/**
 		 * 400 : The request is invalid and cannot be processed. The cause of this is
 		 * often missing a required parameter or trying to execute an invalid
 		 * method on an item.
-		 * @constant
 		 */
 		BadRequest: 400,
 		/**
 		 * 401 : The request cannot be allowed, possibly because your authentication
 		 * information is invalid or because too many requests sent in a short
 		 * period made the throttling ban them.
-		 * @constant
 		 */
 		Unauthorized: 401,
 		/**
 		 * 404 : The item you seek or wish to manipulate was not found
-		 * @constant
 		 */
 		NotFound: 404,
 		/**
 		 * 405 : The method you tried to use is not allowed
-		 * @constant
 		 */
 		MethodNotAllowed: 405,
 		/**
 		 * 500 : This is an unexpected server error.
-		 * @constant
 		 */
 		InternalServerError: 500,
 		/**
 		 * 501 : You are trying to execute a method that is not implemented. This can
 		 * happen when you execute a method that is not supported by the specific
 		 * datatype or if you misspelled a method name in the request.
-		 * @constant
 		 */
 		NotImplemented: 501
 	}
@@ -150,7 +147,7 @@ opera.link = new function OperaLink() {
 	
 	/**
 	 * The location of the Opera Link REST API
-	 * @type String
+	 * @type String 
 	 */
 	this.apiurl = 'https://link.api.opera.com/rest/';
 	
@@ -174,7 +171,7 @@ opera.link = new function OperaLink() {
 	 * call this function instead of opera.extension.tabs.create to show the user
 	 * the authorization page. The function should take one parameter, the url
 	 * of the authorization page.
-	 * @type Function
+	 * @type Function(url)
 	 */
 	this.authorizeFunction = null;
 	
@@ -293,8 +290,8 @@ opera.link = new function OperaLink() {
 	}
 	
 	/**
-	 * Unsets the OAuth access token and token secret. To clear tokens saved to
-	 * storage, use clearSavedToken() instead.
+	 * Unsets the OAuth access token and token secret. To clear tokens that are
+	 * saved to storage, use clearSavedToken() instead.
 	 */
 	this.deauthorize = function() {
 		accessor.token = null;
@@ -453,7 +450,8 @@ opera.link = new function OperaLink() {
 
 
 /**
- * @namespace Utility methods and methods common to all datatypes
+ * @namespace
+ * @desc Utility methods and methods common to all datatypes
  */
 opera.link.util = new function OperaLinkUtils() {
 	
@@ -554,7 +552,10 @@ opera.link.util = new function OperaLinkUtils() {
 	
 	
 	/**
-	 * Helper function to simplify results of requests that only return one item
+	 * Helper function to simplify results of requests that only return one item.
+	 * Replaces single element arrays with the one element.
+	 * @param {Object} data The result object
+	 * @param {Function(result)} The original callback function
 	 */
 	this.simplify = function(data, callback) {
 		if (opera.link.simplifyResults && data.response.length == 1) 
@@ -578,7 +579,8 @@ opera.link.util = new function OperaLinkUtils() {
 
 
 /**
- * @namespace Accesses and/or manipulates synchronized bookmarks
+ * @namespace
+ * @desc Accesses and/or manipulates synchronized bookmarks
  */
 opera.link.bookmarks = new function OperaLinkBookmarks() {
 	
@@ -599,27 +601,16 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 	
 	
 	/**
-	 * Gets an array of all bookmarks inside a folder
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>getAll</b>(callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>getAll</b>(parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * Gets an array of all bookmarks inside the root folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 *	Gets an array of all bookmarks inside a folder
+	 *	@param {String} id The id of the parent folder
+	 *	@param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -637,30 +628,17 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 	
 	/**
 	 * Creates a new bookmark
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The bookmark's properties.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The bookmark's properties.</dd>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * @param {Object} params The bookmark's properties
+	 * @param {Function} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 * Creates a new bookmark inside a folder
+	 * @param {Object} params The bookmark's properties
+	 * @param {String} parent The id of the parent folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -680,30 +658,17 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 
 	/**
 	 * Creates a new bookmark folder
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The bookmark folder's properties.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The bookmark folder's properties.</dd>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * @param {Object} params The bookmark folder's properties
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 * Creates a new bookmark folder inside a folder
+	 * @param {Object} params The bookmark folder's properties
+	 * @param {String} parent The id of the parent folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -723,26 +688,15 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 	
 	/**
 	 * Creates a new bookmark separator
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 * Creates a new bookmark separator inside a folder
+	 * @param {String} parent The id of the parent folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -823,7 +777,8 @@ opera.link.bookmarks = new function OperaLinkBookmarks() {
 }
 
 /**
- * @namespace Accesses and/or manipulates synchronized notes
+ * @namespace
+ * @desc Accesses and/or manipulates synchronized notes
  */
 opera.link.notes = new function OperaLinkNotes() {
 	
@@ -843,27 +798,16 @@ opera.link.notes = new function OperaLinkNotes() {
 	}
 	
 	/**
-	 * Gets an array of all notes inside a folder
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>getAll</b>(callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>getAll</b>(parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * Gets an array of all notes inside the root folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 *	Gets an array of all notes inside a folder
+	 *	@param {String} id The id of the parent folder
+	 *	@param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -881,30 +825,17 @@ opera.link.notes = new function OperaLinkNotes() {
 	
 	/**
 	 * Creates a new note
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The note's properties.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The note's properties.</dd>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * @param {Object} params The note's properties
+	 * @param {Function} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 * Creates a new note inside a folder
+	 * @param {Object} params The note's properties
+	 * @param {String} parent The id of the parent folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -923,31 +854,18 @@ opera.link.notes = new function OperaLinkNotes() {
 	}
 
 	/**
-	 * Creates a new note folder
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(params, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The note folder's properties.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(params, parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Object}</span> <b>params</b></dt>
-	 *					<dd>The note folder's properties.</dd>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * Creates a new note folder folder
+	 * @param {Object} params The note folder's properties
+	 * @param {Function} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 * Creates a new note folder inside a folder
+	 * @param {Object} params The note folder's properties
+	 * @param {String} parent The id of the parent folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -966,27 +884,16 @@ opera.link.notes = new function OperaLinkNotes() {
 	}
 	
 	/**
-	 * Creates a new note separator
-	 * @param {arguments} ... This function has the following overloads:
-	 *		<dl>
-	 *			<dt class="fixedFont"><b>create</b>(callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *			<dt class="fixedFont"><b>create</b>(parent, callback)</dt>
-	 *			<dd>
-	 *				<dl>
-	 *					<dt><span class="light fixedFont">{String}</span> <b>parent</b></dt>
-	 *					<dd>The id of the parent folder.</dd>
-	 *					<dt><span class="light fixedFont">{Function}</span> <b>callback</b></dt>
-	 *					<dd>A function which will be called with the result of the request.</dd>
-	 *				</dl>
-	 *			</dd>
-	 *		</dl>
-	 *		In either case, the callback function is passed one argument, an object 
+	 * Creates a new note separator folder
+	 * @param {Function} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
+	 *		with two properties: "status", the response code, and "response", the JSON 
+	 *		parsed response body.
+	 *//**
+	 * Creates a new note separator inside a folder
+	 * @param {String} parent The id of the parent folder
+	 * @param {Function(result)} callback A function which will be called with the result
+	 *		of the request. The callback function is passed one argument, an object 
 	 *		with two properties: "status", the response code, and "response", the JSON 
 	 *		parsed response body.
 	 */
@@ -1067,7 +974,8 @@ opera.link.notes = new function OperaLinkNotes() {
 }
 
 /**
- * @namespace Accesses and/or manipulates synchronized search engines
+ * @namespace
+ * @desc Accesses and/or manipulates synchronized search engines
  */
 opera.link.searchengines = new function OperaLinkSearchEngines() {
 	
@@ -1141,7 +1049,8 @@ opera.link.searchengines = new function OperaLinkSearchEngines() {
 }
 
 /**
- * @namespace Access and/or manipulates synchronized speed dial entries
+ * @namespace
+ * @desc Access and/or manipulates synchronized speed dial entries
  */
 opera.link.speeddial = new function OperaLinkSpeedDial() {
 	
@@ -1217,7 +1126,8 @@ opera.link.speeddial = new function OperaLinkSpeedDial() {
 }
 
 /**
- * @namespace Access and/or manipulates synchronized URL filters
+ * @namespace 
+ * @desc Access and/or manipulates synchronized URL filters
  */
 opera.link.urlfilter = new function OperaLinkUrlFilter() {
 	
